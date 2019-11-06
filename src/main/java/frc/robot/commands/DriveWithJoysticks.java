@@ -12,6 +12,7 @@ import frc.robot.Robot;
 
 public class DriveWithJoysticks extends Command {
   public DriveWithJoysticks() {
+    // Indicates which subsystem this command uses
     requires(Robot.drive);
   }
 
@@ -23,6 +24,9 @@ public class DriveWithJoysticks extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    // Sets each side of robots speeds to correspond to joystick Y-axis
+    Robot.drive.setLeftSpeed(Robot.oi.leftStick.getY());
+    Robot.drive.setRightSpeed(Robot.oi.rightStick.getY());
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -34,11 +38,14 @@ public class DriveWithJoysticks extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    // Stops robot when command to drive ends
+    Robot.drive.stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }
